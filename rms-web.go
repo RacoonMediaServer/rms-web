@@ -72,7 +72,11 @@ func main() {
 		ctx.HTML(http.StatusOK, "main.tmpl", nil)
 	})
 
-	web.Run(":8080")
+	cfg := config.Config()
+
+	if err := web.Run(fmt.Sprintf("%s:%d", cfg.Http.Host, cfg.Http.Port)); err != nil {
+		logger.Fatalf("Run web server failed: %s", err)
+	}
 }
 
 func wrapFS(fsys fs.FS, dir string) fs.FS {
