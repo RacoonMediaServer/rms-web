@@ -16,6 +16,7 @@
                   <li><a href="/multimedia/downloads">Загрузки</a></li>
                 </ul>
               </li>
+              {{ if eq .CctvEnabled true }}
               <li>
                 <a href="/cameras">Камеры</a>
                 <ul>
@@ -23,11 +24,13 @@
                   <li><a href="/cameras/setup">Настройка</a></li>
                 </ul>
               </li>
+              {{ end }}
               <li>
                 <a href="/services">Сервисы</a>
                 <ul>
-                  <li><a href="#0">Nextcloud</a></li>
-                  <li><a href="#0">Serviio</a></li>
+                  {{ range $i, $s := $.Services }}
+                  <li><a href="/services/{{$i}}">{{ $s.Title }}</a></li>
+                  {{ end }}
                 </ul>
               </li>
               <li>
@@ -37,7 +40,9 @@
                   <li><a href="/settings/torrent">Торрент-клиент</a></li>
                   <li><a href="/settings/notifications">Уведомления</a></li>
                   <li><a href="/settings/transcoding">Транскодирование</a></li>
+                  {{ if eq .CctvEnabled true }}
                   <li><a href="/settings/alert">Тревога</a></li>
+                  {{ end }}
                 </ul>
               </li>
             </ul>

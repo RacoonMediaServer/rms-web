@@ -9,6 +9,7 @@ import (
 
 	"github.com/RacoonMediaServer/rms-packages/pkg/service/servicemgr"
 	"github.com/RacoonMediaServer/rms-web/internal/config"
+	"github.com/RacoonMediaServer/rms-web/internal/ui"
 	"github.com/gin-gonic/gin"
 	"github.com/urfave/cli/v2"
 	"go-micro.dev/v4"
@@ -69,7 +70,7 @@ func main() {
 	web.StaticFS("/css", http.FS(wrapFS(webFS, "web/css")))
 
 	web.GET("/", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "main.tmpl", nil)
+		ctx.HTML(http.StatusOK, "main.tmpl", ui.New())
 	})
 
 	cfg := config.Config()

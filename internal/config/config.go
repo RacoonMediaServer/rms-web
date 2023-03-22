@@ -2,9 +2,23 @@ package config
 
 import "github.com/RacoonMediaServer/rms-packages/pkg/configuration"
 
+// Cctv settings of VMS
+type Cctv struct {
+	Enabled bool
+}
+
+// Service represetns external service link
+type Service struct {
+	Title       string
+	Description string
+	Address     string
+}
+
 // Configuration represents entire service configuration
 type Configuration struct {
-	Http configuration.Http
+	Http     configuration.Http
+	Cctv     Cctv
+	Services []Service
 }
 
 var config Configuration
