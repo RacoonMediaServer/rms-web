@@ -1,0 +1,45 @@
+{{ define "header" }}
+<html>
+    <head>
+        <title>Racoon Media Server</title>
+        <link rel="stylesheet" href="css/menu.css" />
+    </head>
+    <body>
+        <nav>
+            <ul>
+              <li><a href="/">Главная</a></li>
+              <li>
+                <a href="/multimedia">Мультимедия</a>
+                <ul>
+                  <li><a href="/multimedia/library">Библиотека</a></li>
+                  <li><a href="/multimedia/search">Поиск</a></li>
+                  <li><a href="/multimedia/downloads">Загрузки</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="/cameras">Камеры</a>
+                <ul>
+                  <li><a href="/cameras/view">Просмотр</a></li>
+                  <li><a href="/cameras/setup">Настройка</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="/services">Сервисы</a>
+                <ul>
+                  <li><a href="#0">Nextcloud</a></li>
+                  <li><a href="#0">Serviio</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="/settings">Настройки</a>
+                <ul>
+                  <li><a href="/settings/telegram">Telegram-бот</a></li>
+                  <li><a href="/settings/torrent">Торрент-клиент</a></li>
+                  <li><a href="/settings/notifications">Уведомления</a></li>
+                  <li><a href="/settings/transcoding">Транскодирование</a></li>
+                  <li><a href="/settings/alert">Тревога</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+{{ end }}

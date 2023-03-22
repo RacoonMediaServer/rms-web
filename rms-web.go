@@ -1,10 +1,15 @@
 package main
 
 import (
+	"embed"
 	"fmt"
+	"html/template"
+	"io/fs"
+	"net/http"
+
 	"github.com/RacoonMediaServer/rms-packages/pkg/service/servicemgr"
 	"github.com/RacoonMediaServer/rms-web/internal/config"
-	"github.com/RacoonMediaServer/rms-web/internal/db"
+	"github.com/gin-gonic/gin"
 	"github.com/urfave/cli/v2"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/logger"
@@ -13,6 +18,12 @@ import (
 var Version = "v0.0.0"
 
 const serviceName = "rms-web"
+
+//go:embed web
+var webFS embed.FS
+
+//go:embed templates
+var templatesFS embed.FS
 
 func main() {
 	logger.Infof("%s %s", serviceName, Version)
@@ -50,17 +61,25 @@ func main() {
 
 	_ = servicemgr.NewServiceFactory(service)
 
-	_, err := db.Connect(config.Config().Database)
+	root := template.New("root")
+	templates := template.Must(root.ParseFS(templatesFS, "templates/*.tmpl"))
+
+	web := gin.Default()
+	web.SetHTMLTemplate(templates)
+	web.StaticFS("/css", http.FS(wrapFS(webFS, "web/css")))
+
+	web.GET("/", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "main.tmpl", nil)
+	})
+
+	web.Run(":8080")
+}
+
+func wrapFS(fsys fs.FS, dir string) fs.FS {
+	sub, err := fs.Sub(fsys, dir)
 	if err != nil {
-		logger.Fatalf("Connect to database failed: %s", err)
+		panic(err)
 	}
 
-	// регистрируем хендлеры
-	//if err := rms_bot.RegisterRmsBotHandler(service.Server(), bot); err != nil {
-	//	logger.Fatalf("Register service failed: %s", err)
-	//}
-
-	if err := service.Run(); err != nil {
-		logger.Fatalf("Run service failed: %s", err)
-	}
+	return sub
 }
