@@ -1,9 +1,9 @@
-module github.com/RacoonMediaServer/rms-template
+module github.com/RacoonMediaServer/rms-web
 
 go 1.20
 
 require (
-	github.com/RacoonMediaServer/rms-packages v1.0.0
+	github.com/RacoonMediaServer/rms-packages v1.7.7
 	github.com/urfave/cli/v2 v2.3.0
 	go-micro.dev/v4 v4.9.0
 	gorm.io/driver/postgres v1.4.7
@@ -54,7 +54,7 @@ require (
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/text v0.7.0 // indirect
-	google.golang.org/protobuf v1.26.0 // indirect
+	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 )
