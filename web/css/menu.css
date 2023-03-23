@@ -1,45 +1,43 @@
-body {
-    background: #59585c;
-    font-family: "Lexend Exa", sans-serif;
-    color: wheat;
-  }
-  
-  nav {
-    position: absolute;
+nav {
+    position: relative;
     top: 15px;
     left: 50%;
     transform: translateX(-50%);
     display: inline-block;
     border: 1px solid #ebecf1;
     border-radius: 10px;
-    animation: slide-in 1s ease-out;
+    animation: slide-in 750ms ease-out;
     background-color: black;
-  }
-  
-  ul {
+}
+
+ul {
     position: relative;
     display: flex;
     flex: 1 1 auto;
     margin: 0;
     padding: 0 30px;
     list-style-type: none;
-  }
-  ul li:not(:last-child) {
+}
+
+ul li:not(:last-child) {
     margin-right: 40px;
-  }
-  ul li {
+}
+
+ul li {
     border: 2px solid transparent;
     border-radius: 5px;
     padding: 10px;
     transition: background 0.2s;
-  }
-  ul li a {
+}
+
+ul li a {
     color: #fafcff;
     text-decoration: none;
     text-transform: uppercase;
     transition: color 0.2s;
-  }
-  ul li ul {
+}
+
+ul li ul {
     visibility: hidden;
     opacity: 0;
     position: absolute;
@@ -49,40 +47,46 @@ body {
     background: #41403e;
     border-radius: 5px;
     transition: opacity 0.2s, visibility 0.2s;
-  }
-  ul li ul li {
+}
+
+ul li ul li {
     margin: -2px 0 0 -2px;
     width: calc(100% - 20px);
     line-height: 1.7;
-  }
-  ul li ul li a {
+}
+
+ul li ul li a {
     color: #2375d8;
-  }
-  ul li:hover {
+}
+
+ul li:hover {
     background: #e65c00;
-  }
-  ul li:hover a {
+}
+
+ul li:hover a {
     color: #f9f8fd;
-  }
-  ul li:hover ul {
+}
+
+ul li:hover ul {
     visibility: visible;
     opacity: 1;
-  }
-  ul li:hover ul li a {
+}
+
+ul li:hover ul li a {
     color: #f9f8fd;
-  }
-  
-  @keyframes slide-in {
+}
+
+@keyframes slide-in {
     0% {
-      top: -50px;
+        top: -50px;
     }
     40% {
-      top: 20px;
+        top: 20px;
     }
     70% {
-      top: 10px;
+        top: 10px;
     }
     100% {
-      top: 15px;
+        top: 15px;
     }
-  }
+}

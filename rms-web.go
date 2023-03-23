@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"fmt"
+	"github.com/RacoonMediaServer/rms-web/internal/settings"
 	"html/template"
 	"io/fs"
 	"net/http"
@@ -60,7 +61,7 @@ func main() {
 		_ = logger.Init(logger.WithLevel(logger.DebugLevel))
 	}
 
-	_ = servicemgr.NewServiceFactory(service)
+	f := servicemgr.NewServiceFactory(service)
 
 	root := template.New("root")
 	templates := template.Must(root.ParseFS(templatesFS, "templates/*.tmpl"))
@@ -68,13 +69,17 @@ func main() {
 	web := gin.Default()
 	web.SetHTMLTemplate(templates)
 	web.StaticFS("/css", http.FS(wrapFS(webFS, "web/css")))
+	web.StaticFS("/img", http.FS(wrapFS(webFS, "web/img")))
+	web.StaticFS("/js", http.FS(wrapFS(webFS, "web/js")))
 
 	web.GET("/", func(ctx *gin.Context) {
 		ctx.HTML(http.StatusOK, "main.tmpl", ui.New())
 	})
 
-	cfg := config.Config()
+	settingsService := settings.New(f)
+	settingsService.Register(web.Group("/settings"))
 
+	cfg := config.Config()
 	if err := web.Run(fmt.Sprintf("%s:%d", cfg.Http.Host, cfg.Http.Port)); err != nil {
 		logger.Fatalf("Run web server failed: %s", err)
 	}

@@ -19,6 +19,7 @@ type Configuration struct {
 	Http     configuration.Http
 	Cctv     Cctv
 	Services []Service
+	Bot      string
 }
 
 var config Configuration

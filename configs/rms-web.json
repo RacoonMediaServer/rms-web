@@ -6,8 +6,9 @@
   "cctv": {
     "enabled": false
   },
+  "bot": "RacoonMediaServerBot",
   "services": [
-   {
+    {
       "title": "Serviio",
       "description": "DLNA-сервер. Раздает видео контент в локальной сети на любые устройства",
       "address": "http://127.0.0.1:23423/"

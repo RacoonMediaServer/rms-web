@@ -1,0 +1,17 @@
+{{ template "header" . }}
+<p>Частью функционала RacoonMediaServer удобно управлять с помощью Telegram-бота. Для авторизации необходимо
+    скопировать код идентификации и прислать его боту.</p>
+<table>
+    <tr>
+        <td rowspan="2" width="60"><img src="/img/telegram.png" width="40" height="40"/></td>
+        <td>Бот: <a href="{{ .BotLink }}">@{{ .BotID }}</a></td>
+    </tr>
+    <tr>
+        <td>
+            Код идентификации: <label id="identificationCode"><b>{{.IdentificationCode }}</b></label>
+            <input type="button" class="save-button" onclick="return copyToClipboard(this,'identificationCode');"
+                   value="Скопировать"/>
+        </td>
+    </tr>
+</table>
+{{ template "footer" }}

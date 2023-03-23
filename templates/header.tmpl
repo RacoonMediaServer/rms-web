@@ -2,7 +2,9 @@
 <html>
     <head>
         <title>Racoon Media Server</title>
-        <link rel="stylesheet" href="css/menu.css" />
+        <link rel="stylesheet" href="/css/style.css" />
+        <link rel="stylesheet" href="/css/menu.css" />
+        <script src="/js/common.js"></script>
     </head>
     <body>
         <nav>
@@ -11,17 +13,17 @@
               <li>
                 <a href="/multimedia">Мультимедия</a>
                 <ul>
-                  <li><a href="/multimedia/library">Библиотека</a></li>
-                  <li><a href="/multimedia/search">Поиск</a></li>
-                  <li><a href="/multimedia/downloads">Загрузки</a></li>
+                  <a href="/multimedia/library"><li>Библиотека</li></a>
+                  <a href="/multimedia/search"><li>Поиск</li></a>
+                  <a href="/multimedia/downloads"><li>Загрузки</li></a>
                 </ul>
               </li>
               {{ if eq .CctvEnabled true }}
               <li>
                 <a href="/cameras">Камеры</a>
                 <ul>
-                  <li><a href="/cameras/view">Просмотр</a></li>
-                  <li><a href="/cameras/setup">Настройка</a></li>
+                  <a href="/cameras/view"><li>Просмотр</li></a>
+                  <a href="/cameras/setup"><li>Настройка</li></a>
                 </ul>
               </li>
               {{ end }}
@@ -29,22 +31,24 @@
                 <a href="/services">Сервисы</a>
                 <ul>
                   {{ range $i, $s := $.Services }}
-                  <li><a href="/services/{{$i}}">{{ $s.Title }}</a></li>
+                  <a href="/services/{{$i}}"><li>{{ $s.Title }}</li></a>
                   {{ end }}
                 </ul>
               </li>
               <li>
                 <a href="/settings">Настройки</a>
                 <ul>
-                  <li><a href="/settings/telegram">Telegram-бот</a></li>
-                  <li><a href="/settings/torrent">Торрент-клиент</a></li>
-                  <li><a href="/settings/notifications">Уведомления</a></li>
-                  <li><a href="/settings/transcoding">Транскодирование</a></li>
+                  <a href="/settings/telegram"><li>Telegram-бот</li></a>
+                  <a href="/settings/torrent"><li>Торрент-клиент</li></a>
+                  <a href="/settings/notifications"><li>Уведомления</li></a>
+                  <a href="/settings/transcoding"><li>Транскодирование</li></a>
                   {{ if eq .CctvEnabled true }}
-                  <li><a href="/settings/alert">Тревога</a></li>
+                  <a href="/settings/alert"><li>Тревога</li></a>
                   {{ end }}
                 </ul>
               </li>
             </ul>
           </nav>
+          <br><br><br>
+          <div class="content">
 {{ end }}
