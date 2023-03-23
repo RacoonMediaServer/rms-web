@@ -21,7 +21,7 @@ func (s *Service) getTelegramSettings(ctx *gin.Context) {
 	resp, err := s.f.NewBotClient().GetIdentificationCode(ctx, &emptypb.Empty{})
 	if err != nil {
 		logger.Errorf("Get identification code failed: %s", err)
-		ui.DisplayError(ctx, "Не удалось получить код идентификации от удаленного сервера")
+		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось получить код идентификации от удаленного сервера")
 		return
 	}
 	page := telegramPageContext{

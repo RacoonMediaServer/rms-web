@@ -76,6 +76,10 @@ func main() {
 		ctx.HTML(http.StatusOK, "main.tmpl", ui.New())
 	})
 
+	web.NoRoute(func(ctx *gin.Context) {
+		ui.DisplayError(ctx, http.StatusNotFound, "Упс! Страницы не существует")
+	})
+
 	settingsService := settings.New(f)
 	settingsService.Register(web.Group("/settings"))
 
