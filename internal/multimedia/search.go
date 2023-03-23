@@ -1,13 +1,14 @@
 package multimedia
 
 import (
+	"net/http"
+	"time"
+
 	rms_library "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-library"
 	"github.com/RacoonMediaServer/rms-web/internal/ui"
 	"github.com/gin-gonic/gin"
 	"go-micro.dev/v4/client"
 	"go-micro.dev/v4/logger"
-	"net/http"
-	"time"
 )
 
 const moviesSearchLimit = 10
@@ -32,6 +33,9 @@ func (s *Service) getSearchHandler(ctx *gin.Context) {
 			return
 		}
 		page.Movies = resp.Movies
+		for _, mov := range resp.Movies {
+			s.cache.Store(mov.Id, mov)
+		}
 	}
 	ctx.HTML(http.StatusOK, "multimedia.search.tmpl", &page)
 }

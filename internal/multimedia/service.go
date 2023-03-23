@@ -1,11 +1,18 @@
 package multimedia
 
-import "github.com/RacoonMediaServer/rms-packages/pkg/service/servicemgr"
+import (
+	"sync"
+
+	"github.com/RacoonMediaServer/rms-packages/pkg/service/servicemgr"
+)
 
 type Service struct {
-	f servicemgr.ServiceFactory
+	f     servicemgr.ServiceFactory
+	cache sync.Map
 }
 
 func New(f servicemgr.ServiceFactory) *Service {
-	return &Service{f: f}
+	return &Service{
+		f: f,
+	}
 }
