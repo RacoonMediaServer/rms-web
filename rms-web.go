@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"fmt"
+	"github.com/RacoonMediaServer/rms-web/internal/multimedia"
 	"github.com/RacoonMediaServer/rms-web/internal/settings"
 	"html/template"
 	"io/fs"
@@ -82,6 +83,9 @@ func main() {
 
 	settingsService := settings.New(f)
 	settingsService.Register(web.Group("/settings"))
+
+	mediaService := multimedia.New(f)
+	mediaService.Register(web.Group("/multimedia"))
 
 	cfg := config.Config()
 	if err := web.Run(fmt.Sprintf("%s:%d", cfg.Http.Host, cfg.Http.Port)); err != nil {
