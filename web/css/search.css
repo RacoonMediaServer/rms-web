@@ -18,7 +18,7 @@
 }
 
 #search input[type="text"] {
-    background: url(/img/search-dark.png) no-repeat 10px 6px #444;
+    background: url(/img/search-dark.png) no-repeat 10px 10px #444;
     border: 0 none;
     font: bold 18px Arial,Helvetica,Sans-serif;
     color: #777;
