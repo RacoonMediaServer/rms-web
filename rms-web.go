@@ -64,7 +64,7 @@ func main() {
 
 	f := servicemgr.NewServiceFactory(service)
 
-	root := template.New("root")
+	root := template.New("root").Funcs(ui.Functions)
 	templates := template.Must(root.ParseFS(templatesFS, "templates/*.tmpl"))
 
 	web := gin.Default()

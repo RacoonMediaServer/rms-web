@@ -1,5 +1,6 @@
 {{ template "header" . }}
 <div style="text-align: center;">
+    <h1>Поиск</h1>
     <form id="search" action="/multimedia/search" method="get">
         <img src="/img/multimedia.png" width="200"/>
         <br><br>
@@ -17,13 +18,13 @@
                         <b>Жанр: </b> {{$m.Info.Genres}}<br>
                         <b>Описание: </b><i>{{$m.Info.Description}}</i><br>
                         <a href="/multimedia/download/{{$m.Id}}">
-                            <button class="save-button">Скачать</button>
+                            <button>Скачать</button>
                         </a>
                         <a href="/multimedia/download/{{$m.Id}}?fast=true">
-                            <button class="save-button">Скачать быстро</button>
+                            <button>Скачать быстро</button>
                         </a>
                         <a href="/multimedia/download/{{$m.Id}}?select=true">
-                            <button class="save-button">Выбрать раздачу</button>
+                            <button>Выбрать раздачу</button>
                         </a>
                     </p>
                 </td>

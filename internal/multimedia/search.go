@@ -20,7 +20,7 @@ type searchPageContext struct {
 	Movies []*rms_library.FoundMovie
 }
 
-func (s *Service) getSearchHandler(ctx *gin.Context) {
+func (s *Service) searchHandler(ctx *gin.Context) {
 	page := searchPageContext{
 		PageContext: *ui.New(),
 		Query:       ctx.Query("q"),

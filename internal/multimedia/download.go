@@ -32,7 +32,7 @@ func parseSeason(season string) uint32 {
 	return uint32(s)
 }
 
-func (s *Service) getDownloadHandler(ctx *gin.Context) {
+func (s *Service) downloadHandler(ctx *gin.Context) {
 	page := &downloadPageContext{
 		PageContext: *ui.New(),
 		Id:          ctx.Param("id"),
