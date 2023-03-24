@@ -37,6 +37,13 @@ ul li a {
     transition: color 0.2s;
 }
 
+ul li a:visited {
+    color: #fafcff;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
 ul li ul {
     visibility: hidden;
     opacity: 0;
