@@ -1,0 +1,56 @@
+{{ template "header" . }}
+<h1>Уведомления</h1>
+<h2>Общие настройки</h2>
+<form action="/settings/notifications" method="post">
+    <table cellspacing="10">
+        <tr>
+            <td colspan="2">
+                <input type="checkbox" id="enabled" name="enabled"/>
+                <label for="enabled">Уведомления включены</label>
+            </td>
+        </tr>
+
+        <tr>
+            <td><label for="filterInterval">Интервал фильтрации повторяющихся уведомлений (сек): </label></td>
+            <td><input type="number" id="filterInterval" name="filterInterval" min="0"/></td>
+        </tr>
+
+        <tr>
+            <td><label for="rotationInterval">Интервал хранения истории уведомлений (дни): </label></td>
+            <td><input type="number" id="rotationInterval" name="rotationInterval" min="0"/></td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" class="save-button" value="Сохранить"/></td>
+        </tr>
+    </table>
+</form>
+
+<h2>Отправка уведомлений</h2>
+<form action="/settings/notifications/new" method="post">
+    <select id="topic" name="topic">
+        <option value="rms.notifications">Уведомление</option>
+        <option value="rms.malfunctions">Сбой</option>
+        {{if $.CctvEnabled}}
+            <option value="rms.alerts">Тревога</option>
+        {{end}}
+    </select>
+
+    <select id="method" name="method">
+        <option value="0">Telegram</option>
+        <option value="1">E-Mail</option>
+        <option value="2">SMS</option>
+    </select>
+    <label for="address">Адрес: </label>
+    <input type="text" id="address" name="address"/>
+    <input type="submit" class="save-button" value="Добавить"/>
+</form>
+<table class="classic-table">
+    <tr>
+        <th>Тип уведомления</th>
+        <th>Способ доставки</th>
+        <th>Адрес</th>
+        <th>Действия</th>
+    </tr>
+</table>
+{{ template "footer" }}
