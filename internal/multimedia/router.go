@@ -17,6 +17,12 @@ func (s *Service) catalogHandler(ctx *gin.Context) {
 				Description: "Просмотр и управление скачанным мультимедия-контентом",
 			},
 			{
+				Image:       "/img/updates.png",
+				Title:       "Обновления",
+				Link:        "/multimedia/updates",
+				Description: "Посмотреть наличие новых сезонов для уже имеющихся в Библиотеке сериалов",
+			},
+			{
 				Image:       "/img/multimedia.png",
 				Title:       "Поиск",
 				Link:        "/multimedia/search",
