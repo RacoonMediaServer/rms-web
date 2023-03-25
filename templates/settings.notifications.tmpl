@@ -5,19 +5,21 @@
     <table cellspacing="10">
         <tr>
             <td colspan="2">
-                <input type="checkbox" id="enabled" name="enabled"/>
+                <input type="checkbox" id="enabled" name="enabled" {{if .Settings.Enabled }} checked {{end}}/>
                 <label for="enabled">Уведомления включены</label>
             </td>
         </tr>
 
         <tr>
             <td><label for="filterInterval">Интервал фильтрации повторяющихся уведомлений (сек): </label></td>
-            <td><input type="number" id="filterInterval" name="filterInterval" min="0"/></td>
+            <td><input type="number" id="filterInterval" name="filterInterval" min="0"
+                       value="{{.Settings.FilterInterval}}"/></td>
         </tr>
 
         <tr>
             <td><label for="rotationInterval">Интервал хранения истории уведомлений (дни): </label></td>
-            <td><input type="number" id="rotationInterval" name="rotationInterval" min="0"/></td>
+            <td><input type="number" id="rotationInterval" name="rotationInterval" min="0"
+                       value="{{.Settings.RotationInterval}}"/></td>
         </tr>
 
         <tr>
@@ -52,5 +54,15 @@
         <th>Адрес</th>
         <th>Действия</th>
     </tr>
+    {{range $topic, $rules := $.Settings.Rules}}
+        {{range $i, $rule := $rules.Rule}}
+            <tr>
+                <td>{{prettyTopic $topic}}</td>
+                <td>{{$rule.Method}}</td>
+                <td>{{$rule.Destination}}</td>
+                <td><a href="/settings/notifications/delete/{{$topic}}/{{$i}}"><button class="remove-button">Удалить</button></a></td>
+            </tr>
+        {{end}}
+    {{end}}
 </table>
 {{ template "footer" }}
