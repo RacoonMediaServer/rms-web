@@ -1,16 +1,38 @@
 package services
 
 import (
+	"fmt"
 	"github.com/RacoonMediaServer/rms-web/internal/config"
 	"github.com/RacoonMediaServer/rms-web/internal/ui"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 )
 
 func Register(router *gin.RouterGroup) {
+	router.GET("/", catalogHandler)
 	router.GET("/:id", goToService)
+}
+
+func catalogHandler(ctx *gin.Context) {
+	page := ui.CatalogPageContext{
+		PageContext: *ui.New(),
+		Title:       "Сервисы",
+	}
+
+	services := config.Config().Services
+	for i, service := range services {
+		page.Parts = append(page.Parts, ui.CatalogPart{
+			Image:       fmt.Sprintf("/img/%s.png", strings.ToLower(service.Title)),
+			Title:       service.Title,
+			Link:        fmt.Sprintf("/services/%d", i),
+			Description: service.Description,
+		})
+	}
+
+	page.Display(ctx)
 }
 
 func goToService(ctx *gin.Context) {

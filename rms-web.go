@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"fmt"
+	"github.com/RacoonMediaServer/rms-web/internal/cctv"
 	"github.com/RacoonMediaServer/rms-web/internal/multimedia"
 	"github.com/RacoonMediaServer/rms-web/internal/services"
 	"github.com/RacoonMediaServer/rms-web/internal/settings"
@@ -67,6 +68,7 @@ func main() {
 
 	root := template.New("root").Funcs(ui.Functions)
 	templates := template.Must(root.ParseFS(templatesFS, "templates/*.tmpl"))
+	cfg := config.Config()
 
 	web := gin.Default()
 	web.SetHTMLTemplate(templates)
@@ -88,9 +90,13 @@ func main() {
 	mediaService := multimedia.New(f)
 	mediaService.Register(web.Group("/multimedia"))
 
+	if cfg.Cctv.Enabled {
+		cctvService := cctv.New(f)
+		cctvService.Register(web.Group("/cctv"))
+	}
+
 	services.Register(web.Group("/services"))
 
-	cfg := config.Config()
 	if err := web.Run(fmt.Sprintf("%s:%d", cfg.Http.Host, cfg.Http.Port)); err != nil {
 		logger.Fatalf("Run web server failed: %s", err)
 	}

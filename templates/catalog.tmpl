@@ -1,0 +1,11 @@
+{{ template "header" . }}
+<h1>{{$.Title}}</h1>
+<table>
+    {{range $i, $part := $.Parts}}
+        <tr>
+            <td><img src="{{$part.Image}}" alt="{{$part.Title}}" width="64" height="64"/></td>
+            <td><a href="{{$part.Link}}">{{$part.Title}}</a><br><i>{{$part.Description}}</i></td>
+        </tr>
+    {{end}}
+</table>
+{{ template "footer" }}
