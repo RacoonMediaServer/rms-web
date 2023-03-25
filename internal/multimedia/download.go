@@ -40,8 +40,10 @@ func (s *Service) downloadHandler(ctx *gin.Context) {
 		Select:      ctx.Query("select") == "true",
 	}
 
+	torrent := ctx.Query("torrent")
+
 	season := ctx.Query("season")
-	if season == "" {
+	if season == "" && torrent == "" {
 		data, ok := s.cache.Load(page.Id)
 		if ok {
 			mov, ok := data.(*rms_library.FoundMovie)
@@ -58,7 +60,6 @@ func (s *Service) downloadHandler(ctx *gin.Context) {
 	seasonNo := parseSeason(season)
 
 	if page.Select {
-		torrent := ctx.Query("torrent")
 		if torrent != "" {
 			s.downloadMovieTorrent(ctx, torrent)
 		} else {

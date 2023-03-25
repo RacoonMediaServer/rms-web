@@ -1,42 +1,42 @@
 {{ template "header" . }}
-<div style="text-align: center;">
-    <h1>Загрузки</h1>
-    <table class="classic-table" align="center">
+
+<h1>Загрузки</h1>
+<table class="classic-table" align="center">
+    <tr>
+        <th>
+            Название
+        </th>
+        <th>
+            Статус
+        </th>
+        <th>
+            Прогресс
+        </th>
+        <th>
+            Действия
+        </th>
+    </tr>
+    {{ range $id, $t := $.Torrents }}
         <tr>
-            <th>
-                Название
-            </th>
-            <th>
-                Статус
-            </th>
-            <th>
-                Прогресс
-            </th>
-            <th>
-                Действия
-            </th>
+            <td>
+                <b>{{ $t.Title }}</b>
+            </td>
+            <td>
+                <i>{{prettyStatus $t.Status }}</i>
+            </td>
+            <td>
+                {{prettyFloat $t.Progress }}%
+            </td>
+            <td>
+                {{if eq $t.Status 0}}
+                    <a href="/multimedia/downloads/up/{{ $t.Id }}"><input type="button" class="save-button"
+                                                                          value="Повысить приоритет"></a>
+                {{end}}
+                <a href="/multimedia/downloads/delete/{{ $t.Id }}"><input type="button" class="remove-button"
+                                                                          value="Удалить"></a>
+            </td>
         </tr>
-        {{ range $id, $t := $.Torrents }}
-            <tr>
-                <td>
-                    <b>{{ $t.Title }}</b>
-                </td>
-                <td>
-                    <i>{{prettyStatus $t.Status }}</i>
-                </td>
-                <td>
-                    {{prettyFloat $t.Progress }}%
-                </td>
-                <td>
-                    {{if eq $t.Status 0}}
-                        <a href="/multimedia/downloads/up/{{ $t.Id }}"><input type="button" class="save-button"
-                                                                              value="Повысить приоритет"></a>
-                    {{end}}
-                    <a href="/multimedia/downloads/delete/{{ $t.Id }}"><input type="button" class="remove-button"
-                                                                              value="Удалить"></a>
-                </td>
-            </tr>
-        {{ end }}
-    </table>
-</div>
+    {{ end }}
+</table>
+
 {{ template "footer" }}

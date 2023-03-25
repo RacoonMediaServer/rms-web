@@ -1,6 +1,6 @@
 {{ template "header" . }}
 <h1>Выбор сезона</h1>
-<form action="/multimedia/download/{{.Id}}?fast={{.Fast}}&select={{.Select}}" method="get">
+<form action="/multimedia/download/{{.Id}}" method="get">
     <input type="radio" id="all" name="season" value="all" checked/>
     <label for="all">Все</label>
     <br>
@@ -9,6 +9,8 @@
         <label for="season_{{$season}}">{{$season}}</label>
         <br>
     {{ end }}
+    <input type="hidden" name="fast" value="{{.Fast}}"/>
+    <input type="hidden" name="select" value="{{.Select}}"/>
     <br>
     <input type="submit" class="save-button" value="Скачать"/>
 </form>
