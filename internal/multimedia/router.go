@@ -43,6 +43,7 @@ func (s *Service) Register(router *gin.RouterGroup) {
 	router.GET("/", s.catalogHandler)
 
 	router.GET("/library", s.libraryHandler)
+	router.GET("/library/delete/:id", s.deleteMovieHandler)
 
 	router.GET("/search", s.searchHandler)
 	router.GET("/download/:id", s.downloadHandler)

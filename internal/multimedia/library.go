@@ -105,3 +105,14 @@ func (s *Service) libraryHandler(ctx *gin.Context) {
 
 	ctx.HTML(http.StatusOK, "multimedia.library.tmpl", &page)
 }
+
+func (s *Service) deleteMovieHandler(ctx *gin.Context) {
+	id := ctx.Param("id")
+	_, err := s.f.NewLibrary().DeleteMovie(ctx, &rms_library.DeleteMovieRequest{ID: id})
+	if err != nil {
+		logger.Errorf("Delete movie failed: %s", err)
+		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось удалить фильм")
+		return
+	}
+	ctx.Redirect(http.StatusFound, "/multimedia/library")
+}
