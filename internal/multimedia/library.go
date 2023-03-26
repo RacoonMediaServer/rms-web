@@ -24,6 +24,12 @@ type libraryPageContext struct {
 	Sort   string
 }
 
+type playPageContext struct {
+	ui.PageContext
+	Movie    *rms_library.Movie
+	BeginURL string
+}
+
 func parseMovieType(movType string) *rms_library.MovieType {
 	tp := rms_library.MovieType_Film
 	switch movType {
@@ -111,8 +117,23 @@ func (s *Service) deleteMovieHandler(ctx *gin.Context) {
 	_, err := s.f.NewLibrary().DeleteMovie(ctx, &rms_library.DeleteMovieRequest{ID: id})
 	if err != nil {
 		logger.Errorf("Delete movie failed: %s", err)
-		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось удалить фильм")
+		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось удалить фильм/сериал")
 		return
 	}
 	ctx.Redirect(http.StatusFound, "/multimedia/library")
+}
+
+func (s *Service) playHandler(ctx *gin.Context) {
+	resp, err := s.f.NewLibrary().GetMovie(ctx, &rms_library.GetMovieRequest{ID: ctx.Param("id")})
+	if err != nil {
+		logger.Errorf("Get movie failed: %s", err)
+		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось достать информацию о фильме/сериале")
+		return
+	}
+	page := playPageContext{
+		PageContext: *ui.New(),
+		Movie:       resp.Result,
+		BeginURL:    resp.Result.Film.Files[0],
+	}
+	ctx.HTML(http.StatusOK, "multimedia.library.play.tmpl", &page)
 }

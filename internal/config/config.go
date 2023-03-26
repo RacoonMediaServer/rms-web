@@ -14,10 +14,16 @@ type Service struct {
 	Address     string
 }
 
+// Content controls fetching multimedia content
+type Content struct {
+	Directory string
+}
+
 // Configuration represents entire service configuration
 type Configuration struct {
 	Http     configuration.Http
 	Cctv     Cctv
+	Content  Content
 	Services []Service
 	Bot      string
 }

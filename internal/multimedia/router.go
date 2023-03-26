@@ -1,8 +1,10 @@
 package multimedia
 
 import (
+	"github.com/RacoonMediaServer/rms-web/internal/config"
 	"github.com/RacoonMediaServer/rms-web/internal/ui"
 	"github.com/gin-gonic/gin"
+	"path"
 )
 
 func (s *Service) catalogHandler(ctx *gin.Context) {
@@ -43,7 +45,9 @@ func (s *Service) Register(router *gin.RouterGroup) {
 	router.GET("/", s.catalogHandler)
 
 	router.GET("/library", s.libraryHandler)
+	router.GET("/library/movie/:id", s.playHandler)
 	router.GET("/library/delete/:id", s.deleteMovieHandler)
+	router.Static("/library/content", path.Join(config.Config().Content.Directory, "movies"))
 
 	router.GET("/updates", s.updatesHandler)
 

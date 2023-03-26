@@ -1,0 +1,26 @@
+{{ template "header" . }}
+<h1>{{$.Movie.Info.Title}}</h1>
+{{if eq $.Movie.Info.Type 0}}
+    <label for="season">Сезон: </label>
+    <select id="season">
+        {{ range $season, $layout := $.Movie.TvSeries.Seasons }}
+            <option value="{{$season}}">{{$season}}</option>
+        {{ end }}
+    </select>
+    <label for="episode">Эпизод: </label>
+    <select id="episode"></select>
+{{else}}
+    <label for="file">Файл: </label>
+    <select id="file">
+        {{ range $i, $file := $.Movie.Film.Files }}
+            <option value="{{$file}}">{{fileName $file}}</option>
+        {{ end }}
+    </select>
+{{end}}
+
+<video id="video_1" controls autoplay="true" width="1024" height="758" data-setup="{}"
+       src="/multimedia/library/content/{{$.BeginURL}}">
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a
+                href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+</video>
+{{ template "footer" }}

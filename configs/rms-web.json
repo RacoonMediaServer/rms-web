@@ -6,6 +6,9 @@
   "cctv": {
     "enabled": false
   },
+  "content": {
+    "directory": "/media/library"
+  },
   "bot": "RacoonMediaServerBot",
   "services": [
     {

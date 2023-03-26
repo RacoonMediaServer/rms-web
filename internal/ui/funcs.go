@@ -5,12 +5,14 @@ import (
 	"github.com/RacoonMediaServer/rms-packages/pkg/pubsub"
 	rms_torrent "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-torrent"
 	"html/template"
+	"path"
 )
 
 var Functions template.FuncMap = template.FuncMap{
 	"prettyStatus": prettyStatus,
 	"prettyFloat":  prettyFloat,
 	"prettyTopic":  prettyTopic,
+	"fileName":     fileName,
 }
 
 func prettyStatus(status rms_torrent.Status) string {
@@ -43,4 +45,9 @@ func prettyTopic(topic string) string {
 	default:
 		return topic
 	}
+}
+
+func fileName(p string) string {
+	_, file := path.Split(p)
+	return file
 }
