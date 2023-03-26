@@ -1,0 +1,29 @@
+{{ template "header" . }}
+<h1>Обновления</h1>
+{{if eq (len $.Updates) 0}}
+    Не найдено новых сезонов<br>
+{{end}}
+<table style="border-spacing: 10px;">
+    {{range $i, $m := $.Updates}}
+        <tr>
+            <td><img src="{{$m.Info.Poster}}" alt="{{$m.Info.Title}}" width="200"/></td>
+            <td valign="top" style="text-align: left">
+                <p>
+                    <a href="https://www.imdb.com/title/{{$m.Id}}"><b>{{$m.Info.Title}}</b></a><br>
+                    <br>
+                    <b>Год: </b> {{$m.Info.Year}}<br>
+                    <b>Жанр: </b> {{$m.Info.Genres}}<br>
+                    <b>Новые сезоны: </b>{{$m.SeasonsAvailable}}<br>
+                    <b>Описание: </b><i>{{$m.Info.Description}}</i><br>
+                    <a href="/multimedia/download/{{$m.Id}}?season=all">
+                        <button>Скачать</button>
+                    </a>
+                    <a href="/multimedia/download/{{$m.Id}}?fast=true&season=all">
+                        <button>Скачать быстро</button>
+                    </a>
+                </p>
+            </td>
+        </tr>
+    {{ end }}
+</table>
+{{ template "footer" }}
