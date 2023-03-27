@@ -88,7 +88,7 @@ func (s *Service) downloadMovieAuto(ctx *gin.Context, id string, fast bool, seas
 		ui.DisplayError(ctx, http.StatusBadRequest, "Не удалось найти подходящую раздачу")
 		return
 	}
-	ctx.Redirect(http.StatusFound, "/multimedia/downloads")
+	ui.DisplayOK(ctx, "Загрузка началась", "/multimedia/downloads")
 }
 
 func (s *Service) selectTorrent(ctx *gin.Context, page *downloadPageContext, seasonNo uint32) {
@@ -116,5 +116,5 @@ func (s *Service) downloadMovieTorrent(ctx *gin.Context, torrent string) {
 		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось скачать торрент")
 		return
 	}
-	ctx.Redirect(http.StatusFound, "/multimedia/downloads")
+	ui.DisplayOK(ctx, "Загрузка началась", "/multimedia/downloads")
 }

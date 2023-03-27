@@ -120,7 +120,7 @@ func (s *Service) deleteMovieHandler(ctx *gin.Context) {
 		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось удалить фильм/сериал")
 		return
 	}
-	ctx.Redirect(http.StatusFound, "/multimedia/library")
+	ui.DisplayOK(ctx, "Удалено", "/multimedia/library")
 }
 
 func (s *Service) playHandler(ctx *gin.Context) {

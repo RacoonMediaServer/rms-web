@@ -1,57 +1,84 @@
 {{ define "header" }}
-<html>
+    <html>
     <head>
         <title>Racoon Media Server</title>
-        <link rel="stylesheet" href="/css/style.css" />
-        <link rel="stylesheet" href="/css/menu.css" />
-        <link rel="stylesheet" href="/css/search.css" />
-        <link rel="stylesheet" href="/css/table.css" />
+        <link rel="stylesheet" href="/css/style.css"/>
+        <link rel="stylesheet" href="/css/menu.css"/>
+        <link rel="stylesheet" href="/css/search.css"/>
+        <link rel="stylesheet" href="/css/table.css"/>
         <script src="/js/common.js"></script>
+        {{if ne $.Redirect ""}}
+            <meta http-equiv="refresh" content="1;url={{$.Redirect}}"/>
+        {{end}}
     </head>
     <body>
-        <nav>
-            <ul>
-              <li><a href="/">Главная</a></li>
-              <li>
+    <nav>
+        <ul>
+            <li><a href="/">Главная</a></li>
+            <li>
                 <a href="/multimedia">Мультимедия</a>
                 <ul>
-                  <a href="/multimedia/library"><li>Библиотека</li></a>
-                  <a href="/multimedia/updates"><li>Обновления</li></a>
-                  <a href="/multimedia/search"><li>Поиск</li></a>
-                  <a href="/multimedia/downloads"><li>Загрузки</li></a>
+                    <a href="/multimedia/library">
+                        <li>Библиотека</li>
+                    </a>
+                    <a href="/multimedia/updates">
+                        <li>Обновления</li>
+                    </a>
+                    <a href="/multimedia/search">
+                        <li>Поиск</li>
+                    </a>
+                    <a href="/multimedia/downloads">
+                        <li>Загрузки</li>
+                    </a>
                 </ul>
-              </li>
-              {{ if eq .CctvEnabled true }}
-              <li>
-                <a href="/cctv">Камеры</a>
-                <ul>
-                  <a href="/cctv/view"><li>Просмотр</li></a>
-                  <a href="/cctv/setup"><li>Настройка</li></a>
-                </ul>
-              </li>
-              {{ end }}
-              <li>
+            </li>
+            {{ if eq .CctvEnabled true }}
+                <li>
+                    <a href="/cctv">Камеры</a>
+                    <ul>
+                        <a href="/cctv/view">
+                            <li>Просмотр</li>
+                        </a>
+                        <a href="/cctv/setup">
+                            <li>Настройка</li>
+                        </a>
+                    </ul>
+                </li>
+            {{ end }}
+            <li>
                 <a href="/services">Сервисы</a>
                 <ul>
-                  {{ range $i, $s := $.Services }}
-                  <a href="/services/{{$i}}"><li>{{ $s.Title }}</li></a>
-                  {{ end }}
+                    {{ range $i, $s := $.Services }}
+                        <a href="/services/{{$i}}">
+                            <li>{{ $s.Title }}</li>
+                        </a>
+                    {{ end }}
                 </ul>
-              </li>
-              <li>
+            </li>
+            <li>
                 <a href="/settings">Настройки</a>
                 <ul>
-                  <a href="/settings/telegram"><li>Telegram-бот</li></a>
-                  <a href="/settings/torrent"><li>Торрент-клиент</li></a>
-                  <a href="/settings/notifications"><li>Уведомления</li></a>
-                  <a href="/settings/transcoding"><li>Транскодирование</li></a>
-                  {{ if eq .CctvEnabled true }}
-                  <a href="/settings/alert"><li>Тревога</li></a>
-                  {{ end }}
+                    <a href="/settings/telegram">
+                        <li>Telegram-бот</li>
+                    </a>
+                    <a href="/settings/torrent">
+                        <li>Торрент-клиент</li>
+                    </a>
+                    <a href="/settings/notifications">
+                        <li>Уведомления</li>
+                    </a>
+                    <a href="/settings/transcoding">
+                        <li>Транскодирование</li>
+                    </a>
+                    {{ if eq .CctvEnabled true }}
+                        <a href="/settings/alert">
+                            <li>Тревога</li>
+                        </a>
+                    {{ end }}
                 </ul>
-              </li>
-            </ul>
-          </nav>
-          <br><br><br>
-          <div class="content">
+            </li>
+        </ul>
+    </nav>
+    <br><br><br>
+    <div class="content">
 {{ end }}

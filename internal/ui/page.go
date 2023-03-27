@@ -6,6 +6,7 @@ import "github.com/RacoonMediaServer/rms-web/internal/config"
 type PageContext struct {
 	CctvEnabled bool
 	Services    []config.Service
+	Redirect    string
 }
 
 func New() *PageContext {

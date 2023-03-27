@@ -55,7 +55,7 @@ func (s *Service) downloadsDeleteHandler(ctx *gin.Context) {
 		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось удалить загрузку")
 		return
 	}
-	ctx.Redirect(http.StatusFound, "/multimedia/downloads")
+	ui.DisplayOK(ctx, "Удалено", "/multimedia/downloads")
 }
 
 func (s *Service) downloadsUpHandler(ctx *gin.Context) {
@@ -66,5 +66,5 @@ func (s *Service) downloadsUpHandler(ctx *gin.Context) {
 		ui.DisplayError(ctx, http.StatusInternalServerError, "Ошибка при обращении к сервису загрузок")
 		return
 	}
-	ctx.Redirect(http.StatusFound, "/multimedia/downloads")
+	ui.DisplayOK(ctx, "Успешно", "/multimedia/downloads")
 }

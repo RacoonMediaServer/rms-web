@@ -66,7 +66,7 @@ func (s *Service) saveNotificationSettingsHandler(ctx *gin.Context) {
 	settings.RotationInterval = parseUint(ctx.PostForm("rotationInterval"), settings.RotationInterval)
 
 	if s.setNotificationsSettings(ctx, settings) {
-		ctx.Redirect(http.StatusFound, "/settings/notifications")
+		ui.DisplayOK(ctx, "Сохранено", "/settings/notifications")
 	}
 }
 
@@ -97,7 +97,7 @@ func (s *Service) addNotificationRuleHandler(ctx *gin.Context) {
 	}
 
 	if s.setNotificationsSettings(ctx, settings) {
-		ctx.Redirect(http.StatusFound, "/settings/notifications")
+		ui.DisplayOK(ctx, "Сохранено", "/settings/notifications")
 	}
 }
 
@@ -122,6 +122,6 @@ func (s *Service) deleteNotificationHandler(ctx *gin.Context) {
 
 	r.Rule = append(r.Rule[:index], r.Rule[index+1:]...)
 	if s.setNotificationsSettings(ctx, settings) {
-		ctx.Redirect(http.StatusFound, "/settings/notifications")
+		ui.DisplayOK(ctx, "Удалено", "/settings/notifications")
 	}
 }
