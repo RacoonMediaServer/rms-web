@@ -1,0 +1,25 @@
+{{ template "header" . }}
+<h1>Журнал событий</h1>
+<center>
+    <table class="classic-table">
+        <tr>
+            <th>Тип</th>
+            <th>Заголовок</th>
+            <th>Время</th>
+            <th>Детали</th>
+        </tr>
+        {{ range $i, $e := $.Events}}
+            <tr>
+                <td><img src="/img/{{$e.Image}}.png" alt="{{$e.Alt}}" width="32" height="32"/></td>
+                <td>{{ $e.Title }}</td>
+                <td>{{ $e.Time }}</td>
+                <td>
+                    {{ range $k, $v := $e.Details}}
+                        <b>{{$k}}: </b>{{$v}}<br>
+                    {{end}}
+                </td>
+            </tr>
+        {{end}}
+    </table>
+</center>
+{{ template "footer" }}

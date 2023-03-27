@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"github.com/RacoonMediaServer/rms-web/internal/cctv"
+	"github.com/RacoonMediaServer/rms-web/internal/journal"
 	"github.com/RacoonMediaServer/rms-web/internal/multimedia"
 	"github.com/RacoonMediaServer/rms-web/internal/services"
 	"github.com/RacoonMediaServer/rms-web/internal/settings"
@@ -77,12 +78,15 @@ func main() {
 	web.StaticFS("/js", http.FS(wrapFS(webFS, "web/js")))
 
 	web.GET("/", func(ctx *gin.Context) {
-		ctx.HTML(http.StatusOK, "main.tmpl", ui.New())
+		ctx.Redirect(http.StatusFound, "/journal")
 	})
 
 	web.NoRoute(func(ctx *gin.Context) {
 		ui.DisplayError(ctx, http.StatusNotFound, "Упс! Страницы не существует")
 	})
+
+	journalService := journal.New(f)
+	journalService.Register(web.Group("/journal"))
 
 	settingsService := settings.New(f)
 	settingsService.Register(web.Group("/settings"))
