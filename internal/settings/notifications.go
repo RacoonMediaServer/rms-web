@@ -12,10 +12,10 @@ import (
 
 type notifyPageContext struct {
 	ui.PageContext
-	Settings *rms_notifier.Settings
+	Settings *rms_notifier.NotifierSettings
 }
 
-func (s *Service) getNotificationsSettings(ctx *gin.Context) (*rms_notifier.Settings, bool) {
+func (s *Service) getNotificationsSettings(ctx *gin.Context) (*rms_notifier.NotifierSettings, bool) {
 	settings, err := s.f.NewNotifier().GetSettings(ctx, &emptypb.Empty{})
 	if err != nil {
 		logger.Errorf("Get notifier settings failed: %s", err)
@@ -25,7 +25,7 @@ func (s *Service) getNotificationsSettings(ctx *gin.Context) (*rms_notifier.Sett
 	return settings, true
 }
 
-func (s *Service) setNotificationsSettings(ctx *gin.Context, settings *rms_notifier.Settings) bool {
+func (s *Service) setNotificationsSettings(ctx *gin.Context, settings *rms_notifier.NotifierSettings) bool {
 	_, err := s.f.NewNotifier().SetSettings(ctx, settings)
 	if err != nil {
 		logger.Errorf("Save notifier settings failed: %s", err)
@@ -89,7 +89,7 @@ func (s *Service) addNotificationRuleHandler(ctx *gin.Context) {
 	topic := ctx.PostForm("topic")
 	rules, ok := settings.Rules[topic]
 	if !ok || rules == nil {
-		settings.Rules[topic] = &rms_notifier.Settings_Rules{
+		settings.Rules[topic] = &rms_notifier.NotifierSettings_Rules{
 			Rule: []*rms_notifier.Rule{&rule},
 		}
 	} else {
