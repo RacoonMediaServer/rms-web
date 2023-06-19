@@ -3,7 +3,7 @@ module github.com/RacoonMediaServer/rms-web
 go 1.20
 
 require (
-	github.com/RacoonMediaServer/rms-packages v1.8.6
+	github.com/RacoonMediaServer/rms-packages v1.8.11
 	github.com/gin-gonic/gin v1.9.0
 	github.com/urfave/cli/v2 v2.3.0
 	go-micro.dev/v4 v4.9.0
