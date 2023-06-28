@@ -29,12 +29,11 @@ type event struct {
 }
 
 func convertEvent(e *rms_notifier.Event) *event {
-	ev := event{
-		Details: map[string]string{"Отправитель": e.Sender},
-	}
+	ev := event{}
 	if e.Notification != nil {
 		ev.Image = "notification"
 		ev.Alt = "Уведомление"
+		ev.Details = map[string]string{"Отправитель": e.Notification.Sender}
 		switch e.Notification.Kind {
 		case events.Notification_DownloadComplete:
 			ev.Title = "Загрузка завершена"
@@ -57,6 +56,7 @@ func convertEvent(e *rms_notifier.Event) *event {
 			ev.Details["ID"] = *e.Notification.MediaID
 		}
 	} else if e.Malfunction != nil {
+		ev.Details = map[string]string{"Отправитель": e.Malfunction.Sender}
 		ev.Image = "malfunction"
 		ev.Alt = "Сбой"
 		ev.Title = fmt.Sprintf("Сбой в сервисе %s", ev.Sender)
@@ -64,6 +64,7 @@ func convertEvent(e *rms_notifier.Event) *event {
 		ev.Details["Код"] = e.Malfunction.Code.String()
 		ev.Details["Подсистема"] = e.Malfunction.System.String()
 	} else if e.Alert != nil {
+		ev.Details = map[string]string{"Отправитель": e.Alert.Sender}
 		ev.Image = "alert"
 		ev.Alt = "Тревога"
 		ev.Title = "Нарушение периметра"
