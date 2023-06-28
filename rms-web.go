@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"fmt"
+	"github.com/RacoonMediaServer/rms-packages/pkg/pubsub"
 	"github.com/RacoonMediaServer/rms-web/internal/cctv"
 	"github.com/RacoonMediaServer/rms-web/internal/journal"
 	"github.com/RacoonMediaServer/rms-web/internal/multimedia"
@@ -88,7 +89,7 @@ func main() {
 	journalService := journal.New(f)
 	journalService.Register(web.Group("/journal"))
 
-	settingsService := settings.New(f)
+	settingsService := settings.New(f, pubsub.NewPublisher(service))
 	settingsService.Register(web.Group("/settings"))
 
 	mediaService := multimedia.New(f)

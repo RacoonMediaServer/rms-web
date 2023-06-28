@@ -1,6 +1,8 @@
 package settings
 
 import (
+	"github.com/RacoonMediaServer/rms-packages/pkg/events"
+	"github.com/RacoonMediaServer/rms-packages/pkg/misc"
 	rms_notifier "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-notifier"
 	"github.com/RacoonMediaServer/rms-web/internal/ui"
 	"github.com/gin-gonic/gin"
@@ -8,6 +10,7 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type notifyPageContext struct {
@@ -124,4 +127,50 @@ func (s *Service) deleteNotificationHandler(ctx *gin.Context) {
 	if s.setNotificationsSettings(ctx, settings) {
 		ui.DisplayOK(ctx, "Удалено", "/settings/notifications")
 	}
+}
+
+func (s *Service) testNotificationHandler(ctx *gin.Context) {
+	topic := ctx.Param("topic")
+
+	var event interface{}
+	switch topic {
+	case "rms.notifications":
+		tId := "abcde"
+		title := "South Park Season 1"
+		mediaID := "tt21284"
+		event = &events.Notification{
+			Kind:      events.Notification_DownloadComplete,
+			TorrentID: &tId,
+			MediaID:   &mediaID,
+			ItemTitle: &title,
+		}
+
+	case "rms.malfunctions":
+		event = &events.Malfunction{
+			Timestamp:  time.Now().Unix(),
+			Error:      "Test notifications",
+			System:     events.Malfunction_Services,
+			Code:       events.Malfunction_ActionFailed,
+			StackTrace: misc.GetStackTrace(),
+		}
+
+	case "rms.alerts":
+		event = &events.Alert{
+			Timestamp: time.Now().Unix(),
+			Camera:    "Camera 1",
+			Kind:      events.Alert_CrossLineDetected,
+		}
+
+	default:
+		ui.DisplayError(ctx, http.StatusBadRequest, "Неверный тип уведомления")
+		return
+	}
+
+	if err := s.pub.Publish(ctx, event); err != nil {
+		logger.Errorf("Publish test event failed: %s", err)
+		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось отправить уведомление")
+		return
+	}
+
+	ui.DisplayOK(ctx, "Отправлено", "/settings/notifications")
 }

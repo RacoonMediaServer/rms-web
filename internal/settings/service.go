@@ -1,11 +1,15 @@
 package settings
 
-import "github.com/RacoonMediaServer/rms-packages/pkg/service/servicemgr"
+import (
+	"github.com/RacoonMediaServer/rms-packages/pkg/service/servicemgr"
+	"go-micro.dev/v4"
+)
 
 type Service struct {
-	f servicemgr.ServiceFactory
+	f   servicemgr.ServiceFactory
+	pub micro.Event
 }
 
-func New(f servicemgr.ServiceFactory) *Service {
-	return &Service{f: f}
+func New(f servicemgr.ServiceFactory, pub micro.Event) *Service {
+	return &Service{f: f, pub: pub}
 }

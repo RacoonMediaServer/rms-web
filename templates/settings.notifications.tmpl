@@ -60,7 +60,8 @@
                 <td>{{prettyTopic $topic}}</td>
                 <td>{{$rule.Method}}</td>
                 <td>{{$rule.Destination}}</td>
-                <td><a href="/settings/notifications/delete/{{$topic}}/{{$i}}"><button class="remove-button">Удалить</button></a></td>
+                <td><a href="/settings/notifications/delete/{{$topic}}/{{$i}}"><button class="remove-button">Удалить</button></a>
+                <a href="/settings/notifications/test/{{$topic}}"><button>Тест</button></a></td>
             </tr>
         {{end}}
     {{end}}
