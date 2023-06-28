@@ -13,6 +13,7 @@ var Functions template.FuncMap = template.FuncMap{
 	"prettyFloat":  prettyFloat,
 	"prettyTopic":  prettyTopic,
 	"fileName":     fileName,
+	"prettySize":   prettySize,
 }
 
 func prettyStatus(status rms_torrent.Status) string {
@@ -32,6 +33,13 @@ func prettyStatus(status rms_torrent.Status) string {
 
 func prettyFloat(f float32) string {
 	return fmt.Sprintf("%.2f", f)
+}
+
+func prettySize(size uint64) string {
+	if size < 1024 {
+		return fmt.Sprintf("%d Мб", size)
+	}
+	return fmt.Sprintf("%.2f Гб", float64(size)/float64(1024))
 }
 
 func prettyTopic(topic string) string {

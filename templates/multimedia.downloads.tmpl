@@ -13,6 +13,9 @@
             Прогресс
         </th>
         <th>
+            Размер
+        </th>
+        <th>
             Действия
         </th>
     </tr>
@@ -26,6 +29,9 @@
             </td>
             <td>
                 {{prettyFloat $t.Progress }}%
+            </td>
+            <td>
+                {{prettySize $t.SizeMB}}
             </td>
             <td>
                 {{if eq $t.Status 0}}
