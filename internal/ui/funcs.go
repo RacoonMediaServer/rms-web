@@ -9,11 +9,12 @@ import (
 )
 
 var Functions template.FuncMap = template.FuncMap{
-	"prettyStatus": prettyStatus,
-	"prettyFloat":  prettyFloat,
-	"prettyTopic":  prettyTopic,
-	"fileName":     fileName,
-	"prettySize":   prettySize,
+	"prettyStatus":  prettyStatus,
+	"prettyFloat":   prettyFloat,
+	"prettyTopic":   prettyTopic,
+	"fileName":      fileName,
+	"prettySize":    prettySize,
+	"prettyBitrate": prettyBitrate,
 }
 
 func prettyStatus(status rms_torrent.Status) string {
@@ -33,6 +34,10 @@ func prettyStatus(status rms_torrent.Status) string {
 
 func prettyFloat(f float32) string {
 	return fmt.Sprintf("%.2f", f)
+}
+
+func prettyBitrate(bytesPerSecond uint64) string {
+	return fmt.Sprintf("%d", uint64(float64(bytesPerSecond*8)/float64(1024*1024)))
 }
 
 func prettySize(size uint64) string {

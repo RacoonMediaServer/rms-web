@@ -1,0 +1,23 @@
+{{ template "header" . }}
+<h1>Торрент-клиент</h1>
+<form action="/settings/torrent" method="post">
+    <table cellspacing="10">
+        <tr>
+            <td><label for="downloadLimit">Ограничение загрузки (Мбит/с): </label></td>
+            <td><input type="number" id="downloadLimit" name="downloadLimit" min="0"
+                       value="{{prettyBitrate .Settings.DownloadLimit}}"/></td>
+        </tr>
+
+        <tr>
+            <td><label for="uploadLimit">Ограничение раздачи (Мбит/с): </label></td>
+            <td><input type="number" id="uploadLimit" name="uploadLimit" min="0"
+                       value="{{prettyBitrate .Settings.UploadLimit}}"/></td>
+        </tr>
+
+        <tr>
+            <td><input type="submit" class="save-button" value="Сохранить"/></td>
+        </tr>
+    </table>
+</form>
+
+{{ template "footer" }}

@@ -58,4 +58,7 @@ func (s *Service) Register(router *gin.RouterGroup) {
 	router.POST("/notifications/new", s.addNotificationRuleHandler)
 	router.GET("/notifications/delete/:topic/:index", s.deleteNotificationHandler)
 	router.GET("/notifications/test/:topic", s.testNotificationHandler)
+
+	router.GET("/torrent", s.torrentSettingsHandler)
+	router.POST("/torrent", s.saveTorrentSettingsHandler)
 }
