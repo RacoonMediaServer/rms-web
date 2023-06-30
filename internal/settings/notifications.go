@@ -6,9 +6,11 @@ import (
 	rms_notifier "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-notifier"
 	"github.com/RacoonMediaServer/rms-web/internal/ui"
 	"github.com/gin-gonic/gin"
+	"github.com/ttacon/libphonenumber"
 	"go-micro.dev/v4/logger"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"net/http"
+	"net/mail"
 	"strconv"
 	"time"
 )
@@ -73,6 +75,30 @@ func (s *Service) saveNotificationSettingsHandler(ctx *gin.Context) {
 	}
 }
 
+func validateRule(ctx *gin.Context, rule *rms_notifier.Rule) bool {
+	switch rule.Method {
+	case rms_notifier.Rule_Email:
+		_, err := mail.ParseAddress(rule.Destination)
+		if err != nil {
+			ui.DisplayError(ctx, http.StatusBadRequest, "Неверный формат адреса электронной почты")
+			return false
+		}
+	case rms_notifier.Rule_SMS:
+		_, err := libphonenumber.Parse(rule.Destination, "RU")
+		if err != nil {
+			ui.DisplayError(ctx, http.StatusBadRequest, "Неверный формат телефонного номера")
+			return false
+		}
+	case rms_notifier.Rule_Telegram:
+		if rule.Destination != "" {
+			ui.DisplayError(ctx, http.StatusBadRequest, "При оповещении через Telegram не нужна указывать адрес")
+			return false
+		}
+	}
+
+	return true
+}
+
 func (s *Service) addNotificationRuleHandler(ctx *gin.Context) {
 	settings, ok := s.getNotificationsSettings(ctx)
 	if !ok {
@@ -87,6 +113,10 @@ func (s *Service) addNotificationRuleHandler(ctx *gin.Context) {
 	rule := rms_notifier.Rule{
 		Method:      rms_notifier.Rule_Method(method),
 		Destination: ctx.PostForm("address"),
+	}
+
+	if !validateRule(ctx, &rule) {
+		return
 	}
 
 	topic := ctx.PostForm("topic")
