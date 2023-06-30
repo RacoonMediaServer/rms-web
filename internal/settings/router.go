@@ -30,6 +30,12 @@ func (s *Service) catalogHandler(ctx *gin.Context) {
 				Description: "Управления отправкой уведомлений о событиях",
 			},
 			{
+				Image:       "/img/notes.png",
+				Title:       "Заметки",
+				Link:        "/settings/notes",
+				Description: "Настройки управления задачами и заметками через Telegram-бот",
+			},
+			{
 				Image:       "/img/video.png",
 				Title:       "Транскодирование",
 				Link:        "/settings/transcoding",
@@ -61,4 +67,7 @@ func (s *Service) Register(router *gin.RouterGroup) {
 
 	router.GET("/torrent", s.torrentSettingsHandler)
 	router.POST("/torrent", s.saveTorrentSettingsHandler)
+
+	router.GET("/notes", s.notesSettingsHandler)
+	router.POST("/notes", s.saveNotesSettingsHandler)
 }

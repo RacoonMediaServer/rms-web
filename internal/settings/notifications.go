@@ -91,7 +91,7 @@ func validateRule(ctx *gin.Context, rule *rms_notifier.Rule) bool {
 		}
 	case rms_notifier.Rule_Telegram:
 		if rule.Destination != "" {
-			ui.DisplayError(ctx, http.StatusBadRequest, "При оповещении через Telegram не нужна указывать адрес")
+			ui.DisplayError(ctx, http.StatusBadRequest, "При оповещении через Telegram не нужно указывать адрес")
 			return false
 		}
 	}
