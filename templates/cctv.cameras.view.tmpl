@@ -1,0 +1,42 @@
+{{ template "header" . }}
+
+<style type="text/css" media="screen">
+
+.video {
+    height: 100%;
+    width: 100%;
+}
+
+</style>
+
+<script>
+function cameraSelected()
+{
+    var selectedValue = document.getElementById('camera').value;
+    var vPlayer = videojs('example_video_1');
+    vPlayer.src({ type: "video/mp4", src: selectedValue });
+}
+</script>
+<br>
+<center>
+<table><tr>
+<td><b>Camera:</b></td>
+<td>
+                <select name="camera" id="camera" onchange="cameraSelected();">
+                    {{ range $cam := $.Cameras }}
+                        <option value="{{ $cam.URL }}">{{ $cam.Name }}</option>
+                    {{ end }}
+                </select>
+</td>
+</tr></table>
+<br>
+<link href="http://vjs.zencdn.net/7.0/video-js.min.css" rel="stylesheet">
+<script src="http://vjs.zencdn.net/7.0/video.min.js"></script>
+
+
+<video id="example_video_1" class="video-js" controls autoplay="true" width="1024" height="758" data-setup="{}" src="{{$.BeginURL}}" type="video/mp4">
+    <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+</video>
+</center>
+
+{{ template "footer" }}

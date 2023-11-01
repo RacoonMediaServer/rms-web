@@ -1,0 +1,71 @@
+{{ template "header" . }}
+<h1>Добавление камеры</h1>
+
+<form action="/cctv/cameras/setup/new" method="post">
+    <table class="classic-table" align="center">
+        <tr>
+            <td>
+                <label for="name">Имя камеры:</label>
+            </td>
+            <td>
+                <input type="text" name="name" id="name">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="url">URL:</label>
+            </td>
+            <td>
+                <input type="text" name="url" id="url">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="user">Пользователь:</label>
+            </td>
+            <td>
+                <input type="text" name="user" id="user">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="password">Пароль:</label>
+            </td>
+            <td>
+                <input type="password" name="password" id="password">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="mode">Режим записи архива:</label>
+            </td>
+            <td>
+                <select name="mode" id="mode">
+                    <option value="0">Не писать</option>
+                    <option value="1">Писать всегда</option>
+                    <option value="2">Писать по событиям</option>
+                    <option value="3" selected>Оптимальный</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="keep_days">Глубина ротации (дни):</label>
+            </td>
+            <td>
+                <input type="number" name="keep_days" id="keep_days" value="0" min="0" max="30">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="Создать" class="save-button">
+            </td>
+        </tr>
+    </table>
+
+{{ template "footer" }}

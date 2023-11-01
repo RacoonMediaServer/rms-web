@@ -1,6 +1,8 @@
 package cctv
 
-import "github.com/RacoonMediaServer/rms-packages/pkg/service/servicemgr"
+import (
+	"github.com/RacoonMediaServer/rms-packages/pkg/service/servicemgr"
+)
 
 type Service struct {
 	f servicemgr.ServiceFactory

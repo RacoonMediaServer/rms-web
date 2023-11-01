@@ -13,13 +13,13 @@ func (s *Service) catalogHandler(ctx *gin.Context) {
 			{
 				Image:       "/img/play.png",
 				Title:       "Просмотр",
-				Link:        "/cameras/view",
+				Link:        "/cctv/cameras/view",
 				Description: "Просмотр видео с IP-камер",
 			},
 			{
 				Image:       "/img/cctv.png",
 				Title:       "Настройка",
-				Link:        "/cameras/setup",
+				Link:        "/cctv/cameras/setup",
 				Description: "Добавление и удаления IP-камер в систему видеонаблюдения",
 			},
 		},
@@ -29,4 +29,17 @@ func (s *Service) catalogHandler(ctx *gin.Context) {
 
 func (s *Service) Register(router *gin.RouterGroup) {
 	router.GET("/", s.catalogHandler)
+
+	router.GET("/cameras/setup", s.getCamerasHandler)
+
+	router.GET("/cameras/setup/new", s.getNewCameraHandler)
+	router.POST("/cameras/setup/new", s.postNewCameraHandler)
+
+	router.GET("/cameras/setup/edit/:camera", s.getCameraHandler)
+	router.POST("/cameras/setup/edit/:camera", s.postCameraHandler)
+	router.GET("/cameras/setup/delete/:camera", s.deleteCameraHandler)
+
+	router.GET("/cameras/view", s.viewCamerasHandler)
+
+	router.GET("/iptv.m3u8", s.playlistCameraHandler)
 }

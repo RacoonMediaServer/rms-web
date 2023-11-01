@@ -1,0 +1,62 @@
+{{ template "header" . }}
+<h1>Редактирование камеры</h1>
+
+<form action="/cctv/cameras/setup/edit/{{ $.Camera.Id }}" method="post">
+    <table class="classic-table" align="center">
+        <tr>
+            <td>
+                <label for="name">Имя камеры:</label>
+            </td>
+            <td>
+                <input type="text" name="name" id="name" value="{{ $.Camera.Name }}">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="user">Пользователь:</label>
+            </td>
+            <td>
+                <input type="text" name="user" id="user" value="{{ $.Camera.User }}">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="password">Пароль:</label>
+            </td>
+            <td>
+                <input type="password" name="password" id="password" value="{{ $.Camera.Password }}">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="mode">Режим записи архива:</label>
+            </td>
+            <td>
+                <select name="mode" id="mode">
+                    <option value="0" {{if eq $.Camera.Mode 0}} selected {{end}}>Не писать</option>
+                    <option value="1" {{if eq $.Camera.Mode 1}} selected {{end}}>Писать всегда</option>
+                    <option value="2" {{if eq $.Camera.Mode 2}} selected {{end}}>Писать по событиям</option>
+                    <option value="3" {{if eq $.Camera.Mode 3}} selected {{end}}>Оптимальный</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="keep_days">Глубина ротации (дни):</label>
+            </td>
+            <td>
+                <input type="number" name="keep_days" id="keep_days" value="0" min="0" max="30" value="{{ $.Camera.KeepDays }}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="Сохранить" class="save-button">
+            </td>
+        </tr>
+    </table>
+
+{{ template "footer" }}
