@@ -77,6 +77,7 @@ func main() {
 	web.StaticFS("/css", http.FS(wrapFS(webFS, "web/css")))
 	web.StaticFS("/img", http.FS(wrapFS(webFS, "web/img")))
 	web.StaticFS("/js", http.FS(wrapFS(webFS, "web/js")))
+	web.Static("/backup", cfg.Content.Backups)
 
 	web.GET("/", func(ctx *gin.Context) {
 		ctx.Redirect(http.StatusFound, "/journal")

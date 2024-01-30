@@ -17,6 +17,7 @@ type Service struct {
 // Content controls fetching multimedia content
 type Content struct {
 	Directory string
+	Backups   string
 }
 
 // Configuration represents entire service configuration

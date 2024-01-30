@@ -41,6 +41,12 @@ func (s *Service) catalogHandler(ctx *gin.Context) {
 				Link:        "/settings/transcoding",
 				Description: "Настройки транскодирования видео",
 			},
+			{
+				Image:       "/img/backup.png",
+				Title:       "Резервное копирование",
+				Link:        "/settings/backup",
+				Description: "Настройки резервного копирования и восстановления",
+			},
 		},
 	}
 	if config.Config().Cctv.Enabled {
@@ -70,4 +76,9 @@ func (s *Service) Register(router *gin.RouterGroup) {
 
 	router.GET("/notes", s.notesSettingsHandler)
 	router.POST("/notes", s.saveNotesSettingsHandler)
+
+	router.GET("/backup", s.backupSettingsHandler)
+	router.POST("/backup", s.saveBackupSettingsHandler)
+	router.GET("/backup/delete/:backup", s.deleteBackupHandler)
+	router.POST("/backup/launch", s.launchBackupHandler)
 }

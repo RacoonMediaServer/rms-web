@@ -1,0 +1,109 @@
+{{ template "header" . }}
+<h1>Резервное копирование</h1>
+<h2>Настройки автоматического копирования</h2>
+<form action="/settings/backup" method="post">
+    <table>
+        <tr>
+            <td colspan="2">
+                <input type="checkbox" id="enabled" name="enabled" {{if .Settings.Enabled }} checked {{end}}/>
+                <label for="enabled">Включено</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="period">Периодичность:</label>
+            </td>
+            <td>
+                <select name="period" id="period">
+                    <option value="0" {{if eq $.Settings.Period 0}} selected {{end}}>Каждый день</option>
+                    <option value="1" {{if eq $.Settings.Period 1}} selected {{end}}>Каждую неделю</option>
+                    <option value="2" {{if eq $.Settings.Period 2}} selected {{end}}>Каждый месяц</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="day">День: </label>
+            </td>
+            <td>
+                <input type="number" id="day" name="day" min="1" max="29"
+                       value="{{.Settings.Day}}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="hour">Час: </label>
+            </td>
+            <td>
+                <input type="number" id="hour" name="hour" min="0" max="23"
+                       value="{{.Settings.Hour}}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="password">Пароль для архива: </label>
+            </td>
+            <td>
+                <input type="password" id="password" name="password" min="0" max="23"
+                       value="{{.Settings.Password}}"/>
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" class="save-button" value="Сохранить"/></td>
+        </tr>
+    </table>
+</form>
+
+<h2>Ручной запуск</h2>
+<form action="/settings/backup/launch" method="post">
+    <table>
+        <tr>
+            <td colspan="2">
+                Статус: {{prettyBackupStatus $.Status}} {{if eq $.Status 1}} ({{prettyFloat $.Progress}}%) {{end}}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="radio" id="full" name="type" value="0" checked/>
+                <label for="full">Полный бекап</label>
+            </td>
+            <td rowspan="2">
+                <input type="submit" class="save-button" value="Запустить"/>
+            </td>
+        <tr>
+            <td>
+                <input type="radio" id="partial" name="type" value="1" checked/>
+                <label for="partial">Частичный бекап</label>
+            </td>
+    </table>
+</form>
+
+<h2>Резервные копии</h2>
+<table class="classic-table">
+    <tr>
+        <th>Дата</th>
+        <th>Тип</th>
+        <th>Размер</th>
+        <th>Действия</th>
+    </tr>
+    {{ range $i, $b := $.Backups }}
+        <tr>
+            <td>
+                <b>{{prettyUnixTime $b.Date }}</b>
+            </td>
+            <td>
+                <i>{{prettyBackupType $b.Type }}</i>
+            </td>
+            <td>
+                {{prettyBytes $b.Size}}
+            </td>
+            <td>
+                <a href="/backup/{{ $b.FileName }}"><input type="button" class="save-button"
+                                                                      value="Скачать"></a>
+                <a href="/settings/backup/delete/{{ $b.FileName }}"><input type="button" class="remove-button"
+                                                                          value="Удалить"></a>
+            </td>
+        </tr>
+    {{ end }}
+</table>
+{{ template "footer" }}
