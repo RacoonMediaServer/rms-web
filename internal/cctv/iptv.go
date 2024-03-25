@@ -2,6 +2,7 @@ package cctv
 
 import (
 	"fmt"
+	"github.com/RacoonMediaServer/rms-packages/pkg/media"
 	"net/http"
 
 	rms_cctv "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-cctv"
@@ -36,11 +37,11 @@ func (s *Service) playlistCameraHandler(ctx *gin.Context) {
 			MainProfile: useMainSource,
 		}
 		if usePseudo {
-			req.Transport = rms_cctv.VideoTransport_HTTP_HLS_ONE_CHUNK
+			req.Transport = media.Transport_HTTP_HLS_ONE_CHUNK
 		} else if container == "mp4" {
-			req.Transport = rms_cctv.VideoTransport_HTTP_HLS_MP4
+			req.Transport = media.Transport_HTTP_HLS_MP4
 		} else {
-			req.Transport = rms_cctv.VideoTransport_HTTP_HLS_MPEGTS
+			req.Transport = media.Transport_HTTP_HLS_MPEGTS
 		}
 
 		uri, err := cctv.GetLiveUri(ctx, &req)

@@ -1,6 +1,7 @@
 package cctv
 
 import (
+	"github.com/RacoonMediaServer/rms-packages/pkg/media"
 	"net/http"
 
 	rms_cctv "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-cctv"
@@ -31,7 +32,7 @@ func (s *Service) viewCamerasHandler(ctx *gin.Context) {
 	}{}
 
 	req := rms_cctv.GetLiveUriRequest{
-		Transport:   rms_cctv.VideoTransport_HTTP_MP4,
+		Transport:   media.Transport_HTTP_MP4,
 		MainProfile: true,
 	}
 	for _, camera := range resp.Cameras {
