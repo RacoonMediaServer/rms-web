@@ -57,4 +57,7 @@ func (s *Service) Register(router *gin.RouterGroup) {
 	router.GET("/downloads", s.downloadsHandler)
 	router.GET("/downloads/up/:id", s.downloadsUpHandler)
 	router.GET("/downloads/delete/:id", s.downloadsDeleteHandler)
+
+	router.GET("/upload", s.getUploadFileHandler)
+	router.POST("/upload", s.postUploadFileHandler)
 }

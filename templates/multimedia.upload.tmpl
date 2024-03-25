@@ -1,0 +1,10 @@
+{{ template "header" . }}
+<h1>Загрузка файла</h1>
+<form action="/multimedia/upload" method="post" enctype="multipart/form-data">
+    <label for="file">Выберите торрент-файл для загрузки: </label>
+    <input type="file" accept=".torrent" id="file" name="file" />
+    <input type="hidden" name="id" value="{{.ID}}"/>
+    <br>
+    <input type="submit" class="save-button" value="Загрузить"/>
+</form>
+{{ template "footer" }}
