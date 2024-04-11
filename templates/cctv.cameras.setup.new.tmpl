@@ -61,6 +61,19 @@
                 <input type="number" name="keep_days" id="keep_days" value="0" min="0" max="30">
             </td>
         </tr>
+
+        <tr>
+            <td>
+                <label for="schedule">Привязать расписание:</label>
+            </td>
+            <td>
+                <select name="schedule" id="schedule">
+                    {{ range $i,$sched := $.Schedules }}
+                        <option value="{{ $sched.ID }}">{{ $sched.Name }}</option>
+                    {{ end }}
+                </select>
+            </td>
+        </tr>
         <tr>
             <td colspan="2" align="center">
                 <input type="submit" value="Создать" class="save-button">

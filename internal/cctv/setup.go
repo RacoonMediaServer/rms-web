@@ -16,9 +16,15 @@ type camerasPageContext struct {
 	Cameras []*rms_cctv.Camera
 }
 
+type scheduleItem struct {
+	ID   string
+	Name string
+}
+
 type cameraPageContext struct {
 	ui.PageContext
-	Camera *rms_cctv.Camera
+	Camera    *rms_cctv.Camera
+	Schedules []scheduleItem
 }
 
 type cameraForm struct {
@@ -28,6 +34,7 @@ type cameraForm struct {
 	Password string                 `form:"password"`
 	Mode     rms_cctv.RecordingMode `form:"mode"`
 	KeepDays uint                   `form:"keep_days"`
+	Schedule string                 `form:"schedule"`
 }
 
 func (s *Service) getCamerasHandler(ctx *gin.Context) {
@@ -46,7 +53,23 @@ func (s *Service) getCamerasHandler(ctx *gin.Context) {
 }
 
 func (s *Service) getNewCameraHandler(ctx *gin.Context) {
-	page := ui.New()
+	page := struct {
+		ui.PageContext
+		Schedules []scheduleItem
+	}{PageContext: *ui.New()}
+
+	resp, err := s.f.NewCctvSchedules().GetSchedulesList(ctx, &empty.Empty{})
+	if err != nil {
+		logger.Errorf("Get schedules failed: %s", err)
+		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось связаться с системой видеонаблюдения")
+		return
+	}
+
+	page.Schedules = make([]scheduleItem, len(resp.Result))
+	for i, sched := range resp.Result {
+		page.Schedules[i] = scheduleItem{Name: sched.Name, ID: sched.Id}
+	}
+
 	ctx.HTML(http.StatusOK, "cctv.cameras.setup.new.tmpl", page)
 }
 
@@ -64,7 +87,7 @@ func (s *Service) postNewCameraHandler(ctx *gin.Context) {
 		Password: form.Password,
 		Mode:     form.Mode,
 		KeepDays: uint32(form.KeepDays),
-		Schedule: "{}",
+		Schedule: form.Schedule,
 	}
 
 	if _, err := s.f.NewCctvCameras().AddCamera(ctx, &cam); err != nil {
@@ -90,6 +113,13 @@ func (s *Service) getCameraHandler(ctx *gin.Context) {
 		return
 	}
 
+	schedResp, err := s.f.NewCctvSchedules().GetSchedulesList(ctx, &empty.Empty{})
+	if err != nil {
+		logger.Errorf("Get schedules failed: %s", err)
+		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось связаться с системой видеонаблюдения")
+		return
+	}
+
 	var camera *rms_cctv.Camera
 	for _, cam := range resp.Cameras {
 		if cam.Id == uint32(id) {
@@ -101,9 +131,14 @@ func (s *Service) getCameraHandler(ctx *gin.Context) {
 		ui.DisplayError(ctx, http.StatusNotFound, "Камера не найдена")
 		return
 	}
+
 	page := cameraPageContext{
 		PageContext: *ui.New(),
 		Camera:      camera,
+		Schedules:   make([]scheduleItem, len(schedResp.Result)),
+	}
+	for i, sched := range schedResp.Result {
+		page.Schedules[i] = scheduleItem{Name: sched.Name, ID: sched.Id}
 	}
 	ctx.HTML(http.StatusOK, "cctv.cameras.setup.edit.tmpl", &page)
 }
@@ -125,7 +160,7 @@ func (s *Service) postCameraHandler(ctx *gin.Context) {
 		Id:       uint32(id),
 		Mode:     form.Mode,
 		KeepDays: uint32(form.KeepDays),
-		Schedule: "{}",
+		Schedule: form.Schedule,
 	}
 
 	if _, err := s.f.NewCctvCameras().ModifyCamera(ctx, &cam); err != nil {

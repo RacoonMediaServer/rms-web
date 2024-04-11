@@ -14,24 +14,6 @@
 
         <tr>
             <td>
-                <label for="user">Пользователь:</label>
-            </td>
-            <td>
-                <input type="text" name="user" id="user" value="{{ $.Camera.User }}">
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <label for="password">Пароль:</label>
-            </td>
-            <td>
-                <input type="password" name="password" id="password" value="{{ $.Camera.Password }}">
-            </td>
-        </tr>
-
-        <tr>
-            <td>
                 <label for="mode">Режим записи архива:</label>
             </td>
             <td>
@@ -52,6 +34,20 @@
                 <input type="number" name="keep_days" id="keep_days" value="0" min="0" max="30" value="{{ $.Camera.KeepDays }}">
             </td>
         </tr>
+
+        <tr>
+            <td>
+                <label for="schedule">Привязка расписания:</label>
+            </td>
+            <td>
+                <select name="schedule" id="schedule">
+                    {{ range $i,$sched := $.Schedules }}
+                        <option value="{{ $sched.ID }}" {{if eq $.Camera.Schedule $sched.ID}} selected {{end}}>{{ $sched.Name }}</option>
+                    {{ end }}
+                </select>
+            </td>
+        </tr>
+
         <tr>
             <td colspan="2" align="center">
                 <input type="submit" value="Сохранить" class="save-button">
