@@ -3,7 +3,7 @@ module github.com/RacoonMediaServer/rms-web
 go 1.20
 
 require (
-	github.com/RacoonMediaServer/rms-packages v1.12.7
+	github.com/RacoonMediaServer/rms-packages v1.13.4
 	github.com/dustin/go-humanize v1.0.1
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-micro/plugins/v4/registry/etcd v1.2.0

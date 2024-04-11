@@ -17,7 +17,7 @@ type cameraView struct {
 }
 
 func (s *Service) viewCamerasHandler(ctx *gin.Context) {
-	cctv := s.f.NewCctv()
+	cctv := s.f.NewCctvCameras()
 	resp, err := cctv.GetCameras(ctx, &emptypb.Empty{})
 	if err != nil {
 		logger.Errorf("Get cameras list failed: %s", err)

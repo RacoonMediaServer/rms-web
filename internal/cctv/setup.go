@@ -31,7 +31,7 @@ type cameraForm struct {
 }
 
 func (s *Service) getCamerasHandler(ctx *gin.Context) {
-	resp, err := s.f.NewCctv().GetCameras(ctx, &empty.Empty{})
+	resp, err := s.f.NewCctvCameras().GetCameras(ctx, &empty.Empty{})
 	if err != nil {
 		logger.Errorf("Get cameras list failed: %s", err)
 		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось получить список камер")
@@ -67,7 +67,7 @@ func (s *Service) postNewCameraHandler(ctx *gin.Context) {
 		Schedule: "{}",
 	}
 
-	if _, err := s.f.NewCctv().AddCamera(ctx, &cam); err != nil {
+	if _, err := s.f.NewCctvCameras().AddCamera(ctx, &cam); err != nil {
 		logger.Errorf("Add camera failed: %s", err)
 		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось добавить камеру")
 		return
@@ -82,7 +82,7 @@ func (s *Service) getCameraHandler(ctx *gin.Context) {
 		return
 	}
 
-	cctv := s.f.NewCctv()
+	cctv := s.f.NewCctvCameras()
 	resp, err := cctv.GetCameras(ctx, &empty.Empty{})
 	if err != nil {
 		logger.Errorf("Get cameras list failed: %s", err)
@@ -121,17 +121,14 @@ func (s *Service) postCameraHandler(ctx *gin.Context) {
 		return
 	}
 
-	cam := rms_cctv.Camera{
+	cam := rms_cctv.ModifyCameraRequest{
 		Id:       uint32(id),
-		Name:     form.Name,
-		User:     form.User,
-		Password: form.Password,
 		Mode:     form.Mode,
 		KeepDays: uint32(form.KeepDays),
 		Schedule: "{}",
 	}
 
-	if _, err := s.f.NewCctv().ModifyCamera(ctx, &cam); err != nil {
+	if _, err := s.f.NewCctvCameras().ModifyCamera(ctx, &cam); err != nil {
 		logger.Errorf("Modify camera failed: %s", err)
 		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось изменить настройки камеры")
 		return
@@ -145,7 +142,7 @@ func (s *Service) deleteCameraHandler(ctx *gin.Context) {
 		ui.DisplayError(ctx, http.StatusNotFound, "Камера не найдена")
 		return
 	}
-	_, err = s.f.NewCctv().DeleteCamera(ctx, &rms_cctv.DeleteCameraRequest{CameraId: uint32(id)})
+	_, err = s.f.NewCctvCameras().DeleteCamera(ctx, &rms_cctv.DeleteCameraRequest{CameraId: uint32(id)})
 	if err != nil {
 		ui.DisplayError(ctx, http.StatusInternalServerError, "Не удалось удалить камеру")
 		return
