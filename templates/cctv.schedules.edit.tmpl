@@ -1,0 +1,50 @@
+{{ template "header" . }}
+<h1>Редактирование расписания</h1>
+
+<form action="/cctv/schedules/edit/{{$.ID}}" method="post">
+<center>
+<label for="name">Название:</label>
+<input type="text" id="name" name="name" value="{{$.Name}}"/>
+</center>
+<br>
+<table class="classic-table" align="center">
+    <tr>
+        <th>
+            Включен
+        </th>
+        <th>
+            Начало
+        </th>
+        <th>
+            Окончание
+        </th>
+        <th>
+            По выходным
+        </th>
+    </tr>
+    {{ range $i, $j := $.Intervals }}
+        <tr>
+            <td>
+                <input type="checkbox" id="enabled_{{$i}}" name="enabled_{{$i}}" {{if $j.Enabled}}checked{{end}}/>
+            </td>
+            <td>
+                <input type="time" id="begin_{{$i}}" name="begin_{{$i}}" {{if $j.Enabled}}value="{{prettyTimeUnit $j.Interval.Begin.Hours}}:{{prettyTimeUnit $j.Interval.Begin.Minutes}}"{{end}} />
+            </td>
+            <td>
+                <input type="time" id="end_{{$i}}" name="end_{{$i}}" {{if $j.Enabled}}value="{{prettyTimeUnit $j.Interval.End.Hours}}:{{prettyTimeUnit $j.Interval.End.Minutes}}"{{end}}/>
+            </td>
+            <td>
+                <input type="checkbox" id="is_holiday_{{$i}}" name="is_holiday_{{$i}}" {{if $j.Interval.IsHoliday}}checked{{end}}/>
+            </td>
+        </tr>
+    {{ end }}
+
+    <tr>
+        <td colspan="4" align="center">
+            <input type="submit" value="Сохранить" class="save-button">
+        </td>
+    </tr>
+</table>
+</form>
+
+{{ template "footer" }}

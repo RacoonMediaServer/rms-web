@@ -1,0 +1,30 @@
+{{ template "header" . }}
+<h1>Расписания</h1>
+
+<div style="text-align: center;"><a href="/cctv/schedules/new"><button class="save-button">Добавить</button></a><hr></div>
+
+<table class="classic-table" align="center">
+    <tr>
+        <th>
+            Имя
+        </th>
+        <th>
+            Действия
+        </th>
+    </tr>
+    {{ range $i, $schedule := $.Schedules }}
+        <tr>
+            <td>
+                {{ $schedule.Name }}
+            </td>
+            <td>
+            {{ if ne $schedule.ID "default" }}
+                <a href="/cctv/schedules/edit/{{ $schedule.ID }}"><button>Редактировать</button></a>
+                <a href="/cctv/schedules/delete/{{ $schedule.ID }}"><button class="remove-button">Удалить</button></a>
+            {{ end }}
+            </td>
+        </tr>
+    {{ end }}
+</table>
+
+{{ template "footer" }}

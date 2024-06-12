@@ -2,13 +2,14 @@ package ui
 
 import (
 	"fmt"
+	"html/template"
+	"path"
+	"time"
+
 	"github.com/RacoonMediaServer/rms-packages/pkg/pubsub"
 	rms_backup "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-backup"
 	rms_torrent "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-torrent"
 	"github.com/dustin/go-humanize"
-	"html/template"
-	"path"
-	"time"
 )
 
 var Functions template.FuncMap = template.FuncMap{
@@ -22,6 +23,7 @@ var Functions template.FuncMap = template.FuncMap{
 	"prettyUnixTime":     prettyUnixTime,
 	"prettyBackupStatus": prettyBackupStatus,
 	"prettyBytes":        prettyBytes,
+	"prettyTimeUnit":     prettyTimeUnit,
 }
 
 func prettyStatus(status rms_torrent.Status) string {
@@ -94,4 +96,8 @@ func prettyBackupStatus(status rms_backup.GetBackupStatusResponse_Status) string
 
 func prettyBytes(bytes uint64) string {
 	return humanize.Bytes(bytes)
+}
+
+func prettyTimeUnit(t int) string {
+	return fmt.Sprintf("%02d", t)
 }

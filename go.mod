@@ -3,7 +3,7 @@ module github.com/RacoonMediaServer/rms-web
 go 1.20
 
 require (
-	github.com/RacoonMediaServer/rms-packages v1.13.4
+	github.com/RacoonMediaServer/rms-packages v1.13.6
 	github.com/dustin/go-humanize v1.0.1
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-micro/plugins/v4/registry/etcd v1.2.0
@@ -30,6 +30,7 @@ require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-acme/lego/v4 v4.4.0 // indirect
+	github.com/go-follow/time-interval v1.0.0 // indirect
 	github.com/go-git/gcfg v1.5.0 // indirect
 	github.com/go-git/go-billy/v5 v5.3.1 // indirect
 	github.com/go-git/go-git/v5 v5.4.2 // indirect

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/RacoonMediaServer/rms-packages/pkg/schedule"
 	rms_cctv "github.com/RacoonMediaServer/rms-packages/pkg/service/rms-cctv"
 	"github.com/RacoonMediaServer/rms-web/internal/ui"
 	"github.com/gin-gonic/gin"
@@ -19,6 +20,11 @@ type camerasPageContext struct {
 type scheduleItem struct {
 	ID   string
 	Name string
+}
+
+type periodItem struct {
+	Enabled  bool
+	Interval schedule.Interval
 }
 
 type cameraPageContext struct {

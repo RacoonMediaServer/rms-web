@@ -1,0 +1,50 @@
+{{ template "header" . }}
+<h1>Добавление расписания</h1>
+
+<form action="/cctv/schedules/new" method="post">
+<center>
+<label for="name">Название:</label>
+<input type="text" id="name" name="name"/>
+</center>
+<br>
+<table class="classic-table" align="center">
+    <tr>
+        <th>
+            Включен
+        </th>
+        <th>
+            Начало
+        </th>
+        <th>
+            Окончание
+        </th>
+        <th>
+            По выходным
+        </th>
+    </tr>
+    {{ range $i, $j := $.Intervals }}
+        <tr>
+            <td>
+                <input type="checkbox" id="enabled_{{$i}}" name="enabled_{{$i}}"/>
+            </td>
+            <td>
+                <input type="time" id="begin_{{$i}}" name="begin_{{$i}}" />
+            </td>
+            <td>
+                <input type="time" id="end_{{$i}}" name="end_{{$i}}" />
+            </td>
+            <td>
+                <input type="checkbox" id="is_holiday_{{$i}}" name="is_holiday_{{$i}}"/>
+            </td>
+        </tr>
+    {{ end }}
+
+    <tr>
+        <td colspan="4" align="center">
+            <input type="submit" value="Сохранить" class="save-button">
+        </td>
+    </tr>
+</table>
+</form>
+
+{{ template "footer" }}

@@ -22,6 +22,12 @@ func (s *Service) catalogHandler(ctx *gin.Context) {
 				Link:        "/cctv/cameras/setup",
 				Description: "Добавление и удаления IP-камер в систему видеонаблюдения",
 			},
+			{
+				Image:       "/img/schedule.png",
+				Title:       "Расписания",
+				Link:        "/cctv/schedules",
+				Description: "Управление расписаниями получения уведомлений с камер",
+			},
 		},
 	}
 	page.Display(ctx)
@@ -42,4 +48,11 @@ func (s *Service) Register(router *gin.RouterGroup) {
 	router.GET("/cameras/view", s.viewCamerasHandler)
 
 	router.GET("/iptv.m3u8", s.playlistCameraHandler)
+
+	router.GET("/schedules", s.getSchedulesHandler)
+	router.GET("/schedules/new", s.getNewScheduleHandler)
+	router.POST("/schedules/new", s.postNewScheduleHandler)
+	router.GET("/schedules/edit/:id", s.getScheduleHandler)
+	router.POST("/schedules/edit/:id", s.postScheduleHandler)
+	router.GET("/schedules/delete/:id", s.deleteScheduleHandler)
 }
