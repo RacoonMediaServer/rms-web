@@ -164,6 +164,7 @@ func (s *Service) postCameraHandler(ctx *gin.Context) {
 
 	cam := rms_cctv.ModifyCameraRequest{
 		Id:       uint32(id),
+		Name:     form.Name,
 		Mode:     form.Mode,
 		KeepDays: uint32(form.KeepDays),
 		Schedule: form.Schedule,
